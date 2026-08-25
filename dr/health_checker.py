@@ -29,13 +29,69 @@ URL = {"a": "http://127.0.0.1:8001", "b": "http://127.0.0.1:8002"}
 
 
 def probe(region: str, timeout: float) -> tuple[bool, str]:
-    """TODO: trả về (ready, reason). Timeout PHẢI có — netblock làm request treo mãi."""
-    raise NotImplementedError
+    """Trả về (ready, reason). Timeout PHẢI có — netblock làm request treo mãi."""
+    url = f"{URL[region]}/readyz"
+    try:
+        r = httpx.get(url, timeout=timeout)
+        if r.status_code == 200:
+            return True, "OK"
+        return False, f"HTTP {r.status_code}"
+    except Exception as e:
+        return False, str(e)
 
 
 def run(interval: float, timeout: float, threshold: int, duration: float, out: pathlib.Path):
-    """TODO: vòng lặp poll + phát hiện transition + ghi JSONL."""
-    raise NotImplementedError
+    """Vòng lặp poll + phát hiện transition + ghi JSONL."""
+    out.parent.mkdir(parents=True, exist_ok=True)
+    
+    state = {"a": "HEALTHY", "b": "HEALTHY"}
+    consecutive_fails = {"a": 0, "b": 0}
+    start_t = time.time()
+    
+    # Mở file để ghi (append mode)
+    with open(out, "a") as f:
+        while time.time() - start_t < duration:
+            loop_start = time.time()
+            
+            for region in ["a", "b"]:
+                is_ready, reason = probe(region, timeout)
+                
+                if is_ready:
+                    consecutive_fails[region] = 0
+                    if state[region] != "HEALTHY":
+                        state[region] = "HEALTHY"
+                        log_line = {
+                            "event": "state_change",
+                            "ts": time.time(),
+                            "region": region,
+                            "to": "HEALTHY",
+                            "reason": reason,
+                            "interval_s": interval,
+                            "threshold": threshold,
+                            "consecutive_fails": consecutive_fails[region]
+                        }
+                        f.write(json.dumps(log_line) + "\n")
+                        f.flush()
+                else:
+                    consecutive_fails[region] += 1
+                    if consecutive_fails[region] >= threshold and state[region] != "UNHEALTHY":
+                        state[region] = "UNHEALTHY"
+                        log_line = {
+                            "event": "state_change",
+                            "ts": time.time(),
+                            "region": region,
+                            "to": "UNHEALTHY",
+                            "reason": reason,
+                            "interval_s": interval,
+                            "threshold": threshold,
+                            "consecutive_fails": consecutive_fails[region]
+                        }
+                        f.write(json.dumps(log_line) + "\n")
+                        f.flush()
+            
+            elapsed = time.time() - loop_start
+            sleep_time = max(0, interval - elapsed)
+            time.sleep(sleep_time)
 
 
 if __name__ == "__main__":

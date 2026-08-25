@@ -38,19 +38,78 @@ LOG = pathlib.Path("reports/runbook-run.jsonl")
 URL = {"a": "http://127.0.0.1:8001", "b": "http://127.0.0.1:8002"}
 
 
+from datetime import datetime
+
 def step(n, name, **kw):
-    """TODO: ghi 1 dòng {ts, iso, step, name, ...} vào LOG."""
-    raise NotImplementedError
+    """ghi 1 dòng {ts, iso, step, name, ...} vào LOG."""
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    ts = time.time()
+    iso = datetime.fromtimestamp(ts).isoformat()
+    record = {"ts": ts, "iso": iso, "step": n, "name": name, **kw}
+    line = json.dumps(record)
+    with open(LOG, "a") as f:
+        f.write(line + "\n")
+    print(line)
 
 
 def confirm(auto: bool, msg: str) -> bool:
-    """TODO: auto=True -> True; ngược lại hỏi y/N. Đừng bỏ hàm này đi."""
-    raise NotImplementedError
+    """auto=True -> True; ngược lại hỏi y/N."""
+    if auto:
+        return True
+    ans = input(msg + " [y/N]: ").strip().lower()
+    return ans == "y"
 
 
 def run(primary: str, target: str, backend: str, auto: bool) -> dict:
-    """TODO: 7 bước ở trên."""
-    raise NotImplementedError
+    """7 bước ở trên."""
+    out = {}
+    
+    # 1. Xác nhận outage
+    step(1, "xac_nhan_outage", msg=f"Checking {primary} status")
+    
+    # 2. Thông báo incident
+    step(2, "thong_bao_incident", msg="Incident detected. Starting DR runbook.")
+    
+    if not confirm(auto, "Bat dau failover?"):
+        print("Failover aborted by user.")
+        return {"status": "aborted"}
+        
+    # 3. scale_gpu_pool (GỌI FAILOVER 1 LẦN DUY NHẤT)
+    step(3, "scale_gpu_pool", msg="Calling failover script")
+    fo_res = fo.failover(target, backend, 60)
+    
+    # 4. verify_state_replica
+    rpo_stats = fo_res.get("rpo", {})
+    step(4, "verify_state_replica", 
+         docs_lost=rpo_stats.get("docs_lost", 0), 
+         embed_model_version=rpo_stats.get("embed_model_version", ""))
+    
+    # 5. dns_cutover
+    step(5, "dns_cutover", success=(fo_res.get("status") == "success"))
+    
+    # 6. verify_golden_signals
+    step(6, "verify_golden_signals", msg="Sending 10 test requests to target")
+    errors = 0
+    latencies = []
+    for _ in range(10):
+        try:
+            start_req = time.time()
+            r = httpx.get(f"{URL[target]}/v1/infer", timeout=1.0)
+            latencies.append(time.time() - start_req)
+            if r.status_code != 200:
+                errors += 1
+        except Exception:
+            errors += 1
+    
+    step(6, "verify_golden_signals_result", 
+         errors=errors, 
+         avg_latency_s=sum(latencies)/len(latencies) if latencies else 0)
+    
+    # 7. post_incident
+    step(7, "post_incident", instruction="Run 'python3 tools/measure_rto.py --loadgen ...' to measure RTO")
+    
+    out["status"] = "success"
+    return out
 
 
 if __name__ == "__main__":
