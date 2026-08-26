@@ -1,0 +1,8 @@
+{"ts": 1787633202.0386298, "iso": "2026-08-25T04:46:42.038630", "step": 1, "name": "xac_nhan_outage", "msg": "Checking a status"}
+{"ts": 1787633202.040665, "iso": "2026-08-25T04:46:42.040665", "step": 2, "name": "thong_bao_incident", "msg": "Incident detected. Starting DR runbook."}
+{"ts": 1787633202.042785, "iso": "2026-08-25T04:46:42.042785", "step": 3, "name": "scale_gpu_pool", "msg": "Calling failover script"}
+{"ts": 1787633208.451554, "iso": "2026-08-25T04:46:48.451554", "step": 4, "name": "verify_state_replica", "docs_lost": 5, "embed_model_version": ""}
+{"ts": 1787633208.452449, "iso": "2026-08-25T04:46:48.452449", "step": 5, "name": "dns_cutover", "success": true}
+{"ts": 1787633208.4533727, "iso": "2026-08-25T04:46:48.453373", "step": 6, "name": "verify_golden_signals", "msg": "Sending 10 test requests to target"}
+{"ts": 1787633208.7755725, "iso": "2026-08-25T04:46:48.775573", "step": 6, "name": "verify_golden_signals_result", "errors": 0, "avg_latency_s": 0.03209068775177002}
+{"ts": 1787633208.776626, "iso": "2026-08-25T04:46:48.776626", "step": 7, "name": "post_incident", "instruction": "Run 'python3 tools/measure_rto.py --loadgen ...' to measure RTO"}

@@ -1,0 +1,37 @@
+{"ts": 1787633202.1872149, "iso": "2026-08-25T04:46:42.187215", "step": "1_verify_target", "state": {"region": "b", "pool_state": "warm", "weights": false, "count": 0, "latest_doc_ts": null, "ts": 1787633202.1856468}}
+{"ts": 1787633202.2558818, "iso": "2026-08-25T04:46:42.255882", "step": "2_restore_snapshot", "rpo_seconds": 12.82, "docs_lost": 5, "embed_model_version": "unknown"}
+{"ts": 1787633202.25936, "iso": "2026-08-25T04:46:42.259360", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633208.4477296, "iso": "2026-08-25T04:46:48.447730", "step": "4_wait_ready", "duration": 6.18682074546814}
+{"ts": 1787633208.4502966, "iso": "2026-08-25T04:46:48.450297", "step": "5_dns_cutover", "active_region": "b"}
+{"ts": 1787633463.229043, "iso": "2026-08-25T04:51:03.229043", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633463.2670643, "iso": "2026-08-25T04:51:03.267064", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633463.2731333, "iso": "2026-08-25T04:51:03.273133", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633464.2764537, "iso": "2026-08-25T04:51:04.276454", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633576.506458, "iso": "2026-08-25T04:52:56.506458", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633576.5289645, "iso": "2026-08-25T04:52:56.528965", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633576.5325296, "iso": "2026-08-25T04:52:56.532530", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633577.535212, "iso": "2026-08-25T04:52:57.535212", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633627.7003505, "iso": "2026-08-25T04:53:47.700351", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633627.7227466, "iso": "2026-08-25T04:53:47.722747", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633627.7262354, "iso": "2026-08-25T04:53:47.726235", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633628.7288265, "iso": "2026-08-25T04:53:48.728827", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633652.282348, "iso": "2026-08-25T04:54:12.282348", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633652.3218446, "iso": "2026-08-25T04:54:12.321845", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633652.3298454, "iso": "2026-08-25T04:54:12.329845", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633653.3326194, "iso": "2026-08-25T04:54:13.332619", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633682.1915548, "iso": "2026-08-25T04:54:42.191555", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633682.229246, "iso": "2026-08-25T04:54:42.229246", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633682.236143, "iso": "2026-08-25T04:54:42.236143", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633683.2408555, "iso": "2026-08-25T04:54:43.240855", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633718.3435252, "iso": "2026-08-25T04:55:18.343525", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633718.3661294, "iso": "2026-08-25T04:55:18.366129", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633718.3702774, "iso": "2026-08-25T04:55:18.370277", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633719.3734765, "iso": "2026-08-25T04:55:19.373477", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633894.7805905, "iso": "2026-08-25T04:58:14.780591", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633894.801853, "iso": "2026-08-25T04:58:14.801853", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633894.8052607, "iso": "2026-08-25T04:58:14.805261", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633895.8072374, "iso": "2026-08-25T04:58:15.807237", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
+{"ts": 1787633944.0863194, "iso": "2026-08-25T04:59:04.086319", "step": "1_verify_target", "state": {"error": "mocked: target khong bao gio ready"}}
+{"ts": 1787633944.1087205, "iso": "2026-08-25T04:59:04.108721", "step": "2_restore_snapshot", "rpo_seconds": 166.74, "docs_lost": 76, "embed_model_version": "unknown"}
+{"ts": 1787633944.1118333, "iso": "2026-08-25T04:59:04.111833", "step": "3_scale_pool", "action": "set pool_state to full"}
+{"ts": 1787633945.1146054, "iso": "2026-08-25T04:59:05.114605", "step": "4_wait_ready_timeout", "msg": "Target b not ready after 1.0s. ABORT."}
